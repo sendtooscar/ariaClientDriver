@@ -1,0 +1,52 @@
+<!-- launches aria client driver and the reloc node Requires map to be loaded-->
+<launch>
+	<param name="robot_description" textfile="$(find ariaClientDriver)/urdf/pioneer1_new.urdf" />
+
+	 <!-- Run the map server -->
+	<node name="map_server" pkg="map_server" type="map_server" args="$(find ariaClientDriver)/maps/islab_2015_july.yaml"  output="screen">
+	  <param name="frame_id" value="/map" />
+  	</node>
+
+        <group ns="pioneer1">
+    		<param name="tf_prefix" value="pioneer1" />
+		<node name="ariaClientDriverNodesim" pkg="ariaClientDriver" type="ariaClientDriverNodesim5" args="-host 10.0.0.20" />
+		<!-- node name="ariaClientDriverNodesim" pkg="ariaClientDriver" type="ariaClientDriverNodesim3" args="-host localhost -p 7272" /-->
+		<!-- node name="RelocNode_tcp" pkg="RelocSensorDriver" type="RelocNode_tcp1.py" args="10.0.0.20 5000" /-->
+		<!--node name="RelocNode_tcp" pkg="RelocSensorDriver" type="RelocNode_tcp1.py" args="127.0.0.1 5000" /-->
+		<node pkg="amcl" type="amcl" name="amcl" output="screen">
+		  <remap from="map" to="/map" />
+		  <remap from="static_map" to="/static_map" />
+		  <param name="global_frame_id" value="/map" />
+		</node>
+		<!--node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    			<rosparam file="$(find ariaClientDriver)/navparam/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    			<rosparam file="$(find ariaClientDriver)/navparam/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    			<rosparam file="$(find ariaClientDriver)/navparam/local_costmap_params.yaml" command="load" />
+    			<rosparam file="$(find ariaClientDriver)/navparam/global_costmap_params.yaml" command="load" />
+    			<rosparam file="$(find ariaClientDriver)/navparam/base_local_planner_params.yaml" command="load" />
+			<remap from="map" to="/map" />
+		  	<remap from="static_map" to="/static_map" />
+  		</node-->
+	</group>
+
+	<!--group ns="pioneer2">
+    		<param name="tf_prefix" value="pioneer2" />
+		<node name="ariaClientDriverNodesim" pkg="ariaClientDriver" type="ariaClientDriverNodesim3" args="-host 10.0.0.21" />
+		<node pkg="amcl" type="amcl" name="amcl" output="screen">
+		  <remap from="map" to="/map" />
+		  <remap from="static_map" to="/static_map" />
+		  <param name="global_frame_id" value="/map" />
+		</node>
+		<node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    			<rosparam file="$(find ariaClientDriver)/navparam/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    			<rosparam file="$(find ariaClientDriver)/navparam/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    			<rosparam file="$(find ariaClientDriver)/navparam/local_costmap_params.yaml" command="load" />
+    			<rosparam file="$(find ariaClientDriver)/navparam/global_costmap_params.yaml" command="load" />
+    			<rosparam file="$(find ariaClientDriver)/navparam/base_local_planner_params.yaml" command="load" />
+			<remap from="map" to="/map" />
+		  	<remap from="static_map" to="/static_map" />
+  		</node>
+	</group-->
+	<node name="rviz" pkg="rviz" type="rviz" args="-d $(find ariaClientDriver)/pioneer2_reloc1.vcg" output="screen"/>
+	
+</launch>

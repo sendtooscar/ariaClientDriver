@@ -1,0 +1,9 @@
+<launch>
+	<param name="robot_description" textfile="$(find ariaClientDriver)/urdf/pioneer1_new.urdf" />
+	<group ns="pioneer1">
+    		<param name="tf_prefix" value="pioneer1" />
+		<node name="ariaClientDriverNodesim" pkg="ariaClientDriver" type="ariaClientDriverNodesim5" args="-host localhost -p 7272" />
+	</group>
+	
+	
+</launch>

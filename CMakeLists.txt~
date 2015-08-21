@@ -1,0 +1,74 @@
+cmake_minimum_required(VERSION 2.4.6)
+include($ENV{ROS_ROOT}/core/rosbuild/rosbuild.cmake)
+
+
+
+# Set the build type.  Options are:
+#  Coverage       : w/ debug symbols, w/o optimization, w/ code-coverage
+#  Debug          : w/ debug symbols, w/o optimization
+#  Release        : w/o debug symbols, w/ optimization
+#  RelWithDebInfo : w/ debug symbols, w/ optimization
+#  MinSizeRel     : w/o debug symbols, w/ optimization, stripped binaries
+#set(ROS_BUILD_TYPE RelWithDebInfo)
+
+rosbuild_init()
+
+#set the default path for built executables to the "bin" directory
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
+#set the default path for built libraries to the "lib" directory
+set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)
+
+#uncomment if you have defined messages
+rosbuild_genmsg()
+#uncomment if you have defined services
+#rosbuild_gensrv()
+
+#common commands for building c++ executables and libraries
+#rosbuild_add_library(${PROJECT_NAME} src/example.cpp)
+#target_link_libraries(${PROJECT_NAME} another_library)
+#rosbuild_add_boost_directories()
+#rosbuild_link_boost(${PROJECT_NAME} thread)
+#rosbuild_add_executable(example examples/example.cpp)
+#target_link_libraries(example ${PROJECT_NAME})
+
+
+
+rosbuild_add_boost_directories()
+
+# set the path to the Include folder
+include_directories( ${CMAKE_SOURCE_DIR}/Aria/include)
+include_directories( ${CMAKE_SOURCE_DIR}/Aria/ArNetworking/include)
+
+# set the path to the library folder
+link_directories( ${CMAKE_SOURCE_DIR}/Aria/lib)
+
+# add_library(ariaClientDriver src/ariaClientDriver.cpp)
+# rosbuild_add_executable(talker src/talker.cpp)
+# rosbuild_add_executable(listener src/listener.cpp)
+rosbuild_add_executable(ariaClientDriverNode src/ariaClientDriverNode.cpp)
+rosbuild_add_executable(ariaClientTeleop src/ariaClientTeleop.cpp)
+#for simulator
+rosbuild_add_executable(ariaClientTwistTeleop src/ariaClientTwistTeleop.cpp)
+rosbuild_add_executable(ariaClientDriverNodesim src/ariaClientDriverNodesim.cpp)
+#(tf_prefix compatible)
+rosbuild_add_executable(ariaClientDriverNode2 src/ariaClientDriverNode2.cpp)
+rosbuild_add_executable(ariaClientDriverNodesim2 src/ariaClientDriverNodesim2.cpp)
+#(raw laser read)
+rosbuild_add_executable(ariaClientDriverNodesim3 src/ariaClientDriverNodesim3.cpp)
+#(direct motor access)
+rosbuild_add_executable(ariaClientDriverNodesim4 src/ariaClientDriverNodesim4.cpp)
+#(point cloud publish)
+rosbuild_add_executable(ariaClientDriverNodesim5 src/ariaClientDriverNodesim5.cpp)
+
+# link the libraries to the executable
+#target_link_libraries(talker Aria ArNetworking pthread dl rt ariaClientDriver)
+target_link_libraries(ariaClientDriverNode Aria ArNetworking pthread dl rt)
+target_link_libraries(ariaClientDriverNodesim Aria ArNetworking pthread dl rt)
+target_link_libraries(ariaClientDriverNode2 Aria ArNetworking pthread dl rt)
+target_link_libraries(ariaClientDriverNodesim2 Aria ArNetworking pthread dl rt)
+target_link_libraries(ariaClientDriverNodesim3 Aria ArNetworking pthread dl rt)
+target_link_libraries(ariaClientDriverNodesim4 Aria ArNetworking pthread dl rt)
+target_link_libraries(ariaClientDriverNodesim5 Aria ArNetworking pthread dl rt)
+
+
+MESSAGE(STATUS "HI" ${CMAKE_SOURCE_DIR} "/../../../../opt/ros/fuerte/stacks/geometry/tf/include")

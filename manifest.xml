@@ -1,0 +1,20 @@
+<package>
+  <description brief="ariaClientDriver">
+
+     ariaClientDriver
+
+  </description>
+  <author>oscar</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/ariaClientDriver</url>
+  <depend package="roscpp"/>
+  <depend package="tf"/>
+  <depend package="geometry_msgs"/>
+  <depend package="std_msgs"/>
+  <depend package="robot_state_publisher"/>
+  <depend package="kdl_parser"/>
+
+</package>
+
+
