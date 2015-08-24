@@ -1,4 +1,7 @@
 # ariaClientDriver
+
+![alt text](https://cloud.githubusercontent.com/assets/10774875/9448012/cbaaf228-4a74-11e5-9531-0b07e5f585ba.png "islabexp")
+
 This is a Driver node for pioneer robots (or any robot) running using ARIA libraries of MoblieRobots Inc. This driver does not need a ROS installation on the robots host computer. Therefore this package is suitable for pioneer robots equipped with older computers which makes it difficult to install ROS. If you prefer to install ROS on the robots`s host computer, ROSARIA package is recomended (http://wiki.ros.org/ROSARIA).
 
 The package is a client software with a ROS wrapper which connects with ARIA SDK based servers running on robots. The user simply runs the server on the robot`s host computer and runs the ROS client on a remote machine. This allows a quick and easy way to integrate robots running ARIA to a ROS based multi-robot framework.
