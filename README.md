@@ -60,3 +60,69 @@ This completes the package installation. Use the following test examples to fami
 |AriaNavData 		|Custom message type: ``ariaClientDriver/AriaNavData``. Publishes all robot data. (ToDo: ROS parameter to enable this topic)|
 
 
+##Examples
+
+###A. Single robot SLAM
+This example shows how to use the ROS navigation stack with the driver node. 
+
+1. Initiate one robot in the Mobile Sim simulator: 
+ ```bash
+  $ MobileSim -m /usr/local/Aria/maps/columbia.map -r p3at
+ ```
+2. Run the server on the robot: 
+ ```bash
+ $ /usr/local/Aria/ArNetworking/examples/./serverDemo3 -connectlaser -rh localhost -rrtp 8101 -ris -sp 7272 
+ ```
+
+3. Run the ROS driver client, gmapping for SLAM, and RVIZ for visualization using the following launch file: 
+ ```bash
+ $ roslaunch ariaClientDriver test1_1robotslam.launch 
+ ```
+4. Go to terminal and use arrow keys to move robot OR use the teleop panel to move the robot and build the map of the enviroment.  In the terminal press 'u' to disable obstacle avoidance if needed.
+
+5. Once complete, run the following commands in a new terminal to save the map. 
+ ```bash
+ $ roscd ariaClientDriver
+ $ rosrun map_server map_saver -f maps/columbia
+ ```
+ 
+###B.Multi-Robot Localization 
+1. Close all programs and initialize two robots in the simulator.
+ ```bash
+ $ MobileSim -m /usr/local/Aria/maps/columbia.map -r p3at -r p3at
+ ```
+ The port of the robot is specified once the simulator is initiated.
+
+
+2. Run servers on each robot using two terminals
+ ```bash
+ $ /usr/local/Aria/ArNetworking/examples/./serverDemo3 -connectlaser -rh localhost -rrtp 8101 -ris -sp 7272
+ $ /usr/local/Aria/ArNetworking/examples/./serverDemo3 -connectlaser -rh localhost -rrtp 8102 -ris -sp 7273
+ ```
+ The port used to connect to the simulator is specified using the -rrtp option flag, and the port used to initiate the  robot server is specified using the -sp option flag.
+
+
+3. Run the ROS driver client, gmapping for SLAM, and RVIZ for visualization for both robots using the following launch file: 
+ ```bash
+ $ roslaunch ariaClientDriver test2_2robotamcl.launch 
+ ```
+ Key board can be used to move both robots at once OR you can break the launch file to two launch files one for each  robot to realize seperate control. Alternatively you can use the teleop panels to move the robots. The partical distribution should converge to the correct location of the map as the robot collects scans of the enviroment. Also you can uncomment the move base node in the launch file which allows to set waypoints for the robot. The robot should find the optimum path to manuver throught hte enviroment.
+
+###C.Running on actual robots
+This example explains the procedure to realize the above functionality using actaal robots.
+
+1. Connect all robots to the same Wifi network and identify the IP addresses of each robot.
+
+2. Telnet or ssh each robot and copy the `serverDemo3.cpp` file to `/usr/local/Arnl/examples` folder of the robot's computer. 
+
+3. Compile the file using the command:
+ ```bash
+  $ sudo make serverDemo3
+ ```
+ 
+4. Do the same for both robots and run the server on each robot.
+ ```bash
+ $ sudo ./serverDemo3 -connectlaser 
+ ```
+
+5. On your local machine you can run  example 1  and example 2 using the same procedure explained above. The only change is that you should use the robots ip address. The following launch files can be used as reference to implement the examples using actual robots.
