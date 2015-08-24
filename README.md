@@ -65,6 +65,9 @@ This completes the package installation. Use the following test examples to fami
 ###A. Single robot SLAM
 This example shows how to use the ROS navigation stack with the driver node. 
 
+![alt text](https://cloud.githubusercontent.com/assets/10774875/9443583/5f516458-4a5c-11e5-999a-0b680f8898e3.png "Example1")
+
+
 1. Initiate one robot in the Mobile Sim simulator: 
  ```bash
   $ MobileSim -m /usr/local/Aria/maps/columbia.map -r p3at
@@ -86,7 +89,10 @@ This example shows how to use the ROS navigation stack with the driver node.
  $ rosrun map_server map_saver -f maps/columbia
  ```
  
-###B.Multi-Robot Localization 
+###B. Multi-Robot Localization 
+
+![alt text](https://cloud.githubusercontent.com/assets/10774875/9443703/26159f28-4a5d-11e5-9ed9-58499819cd3d.png "Example2")
+
 1. Close all programs and initialize two robots in the simulator.
  ```bash
  $ MobileSim -m /usr/local/Aria/maps/columbia.map -r p3at -r p3at
@@ -108,8 +114,10 @@ This example shows how to use the ROS navigation stack with the driver node.
  ```
  Key board can be used to move both robots at once OR you can break the launch file to two launch files one for each  robot to realize seperate control. Alternatively you can use the teleop panels to move the robots. The partical distribution should converge to the correct location of the map as the robot collects scans of the enviroment. Also you can uncomment the move base node in the launch file which allows to set waypoints for the robot. The robot should find the optimum path to manuver throught hte enviroment.
 
-###C.Running on actual robots
+###C. Running on actual robots
 This example explains the procedure to realize the above functionality using actaal robots.
+
+![alt text](https://cloud.githubusercontent.com/assets/10774875/9443710/3444cb0a-4a5d-11e5-9cfe-0da3ab03a3a3.png "Example3")
 
 1. Connect all robots to the same Wifi network and identify the IP addresses of each robot.
 
