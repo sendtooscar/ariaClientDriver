@@ -50,13 +50,13 @@ This completes the package installation. Use the following test examples to fami
 |Type|Description|
 |------|------|
 |odom 			|Type: ``nav_msgs/Odometry``. Publishes odometry reading of the robot.|
-|scan			|Type: ``sensor_msgs/LaserScan``. Publishes raw laser readings of the robot. (configured to 1 degree resolution and 180 degree field of view. ToDo: Set these using ROS parameters)|
-|cmd_vel_ratio 		|Type: ``geometry_msgs/Twist``. This is the default topic used for robot motion control. The robot will assume the set translational and rotation speeds while avoiding obstacles. The speeds are accepted as a ratio of the set maximum velocity. (ToDo: ROS parameters to set teh maximum velocity)|
+|scan			|Type: ``sensor_msgs/LaserScan``. Publishes raw laser readings of the robot. (Configured to 1 degree resolution and 180 degree field of view. ToDo: Set these using ROS parameters)|
+|cmd_vel_ratio 		|Type: ``geometry_msgs/Twist``. This is the default topic used for robot motion control. The robot will assume the set translational and rotation speeds while avoiding obstacles. The speeds are accepted as a ratio of the set maximum velocity. (ToDo: ROS parameters to set maximum velocity)|
 |cmd_vel 		|Type: ``geometry_msgs/Twist``. This topic is used to send direct motion commands. I.e., set the translational and rotation speeds in metric units without obstacle avoidance behaviours.|
 |direct_enable 		|Type: `std_msgs/Bool`. This topic is used to enable or disable direct motion commands. Publish `true` to enable and latch direct motion commands.|	
 |**Deprecated topics:**||
-|scan2 		         |Publish laser scans as a ROS point cloud massege|
+|scan2 		         |Publish laser scans as a ROS point cloud message|
 |AriaCmdVel 		|Custom topic used to control the robot|
-|AriaNavData 		|Custom massege type: ``ariaClientDriver/AriaNavData``. Publishes all robot data. (ToDo: ROS parameter to enable this topic)|
+|AriaNavData 		|Custom message type: ``ariaClientDriver/AriaNavData``. Publishes all robot data. (ToDo: ROS parameter to enable this topic)|
 
 
