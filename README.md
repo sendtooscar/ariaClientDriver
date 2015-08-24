@@ -1,7 +1,7 @@
 # ariaClientDriver
 This is a Driver node for pioneer robots (or any robot) running using ARIA libraries of MoblieRobots Inc. This driver does not need a ROS installation on the robots host computer. Therefore this package is suitable for pioneer robots equipped with older computers which makes it difficult to install ROS. If you prefer to install ROS on the robots`s host computer, ROSARIA package is recomended (http://wiki.ros.org/ROSARIA).
 
-The package is a Client software with a ROS Wrapper which connects with ARIA SDK based servers running on robots. The user simply runs the server on the robot`s host computer and runs the ROS client on a remote machine. This allows a quick and easy way to integrate robots running ARIA to a ROS multi-robot framework.
+The package is a client software with a ROS wrapper which connects with ARIA SDK based servers running on robots. The user simply runs the server on the robot`s host computer and runs the ROS client on a remote machine. This allows a quick and easy way to integrate robots running ARIA to a ROS based multi-robot framework.
 
 ## Installation
 1. Install the following from the mobile robots site (The instructions assumes a 32 bit Ubuntu system. For other systems please find the corresponding files in these links):
@@ -12,8 +12,7 @@ The package is a Client software with a ROS Wrapper which connects with ARIA SDK
 
 	* ARNL Libraries (Optional- Not required for simulation): Navigate to http://robots.mobilerobots.com/wiki/ARNL,_SONARNL_and_MOGS and install Base ARNL Library 1.9.0 - Ubuntu 12.04.2 (precise) or later, 32-bit i386 architecture  and ARNL Laser Localization Library 1.9.0 - Ubuntu 12.04.2 (precise) or later, 32-bit i386 architecture.
 	
-2. The package is tested on ROS fuerte using rosbuild system on 32-bit Ubuntu 12.04  
-For later distributions please follow the instructions given in section at the end. 
+2. The package is tested on ROS fuerte using rosbuild system on 32-bit Ubuntu 12.04.
 To install and configure ROS fuerte please use the steps detailed in the following link: http://wiki.ros.org/fuerte/Installation/Ubuntu 
 
 3. Use the following steps to configure a ros_workspace directory (if not already configured):
@@ -35,15 +34,15 @@ $ echo "export ROS_PACKAGE_PATH=/opt/ros/fuerte/share:/opt/ros/fuerte/stacks:~/r
  $ make
  ```
 6. If the compiler complains about CMake Cache files,  navigate to the `ariaClient
-Driver/build` directory and remove `CMakeCache.txt`. Aria libraries included in the zip file are 32bit libraries so depending on your system edit the library paths in `CMakeLists.txt` file to the 64 bit library locations installed on your machine. The exact steps needed for a 64bit UBUNTU 12.04  system running hydro are given in section at the end.
+Driver/build` directory and remove `CMakeCache.txt`. Aria libraries included in the zip file are 32-bit libraries, so depending on your system edit the library paths in `CMakeLists.txt` file to 64-bit library locations installed on your machine.
 
-7. The current version of the driver provides raw laser data access and direct velocity motion commands.  For this to work, the robot or the simulating machine should compile and run serverDemo3.cpp modified server. The `serverDemo3.cpp` file is located in  `/ariaClientDriver/Aria/ArNetworking/examples/`  directory. Copy this to `/usr/local/Aria/ArNetworking/examples/` directory. Open terminal and type the following to compile the modified server.
+7. The current version of the driver provides raw laser data access and direct velocity motion commands.  For this to work, the robot or the simulating machine should compile and run `serverDemo3.cpp` modified server. The `serverDemo3.cpp` file is located in  `/ariaClientDriver/Aria/ArNetworking/examples/`  directory. Copy this to `/usr/local/Aria/ArNetworking/examples/` directory. Open a terminal and type the following to compile the modified server.
  ```bash
 $ cd /usr/local/Aria/ArNetworking/examples/
 $ make serverDemo3
 ```
 
-This completes the package installation. Use the following test examples to familiarize with the basic functionality of the ariaClientDriver node.
+This completes the package installation. The test examples can be used to familiarize with basic functionality of the ariaClientDriver node.
 
 ## Topic List
 
@@ -81,7 +80,7 @@ This example shows how to use the ROS navigation stack with the driver node.
  ```bash
  $ roslaunch ariaClientDriver test1_1robotslam.launch 
  ```
-4. Go to terminal and use arrow keys to move robot OR use the teleop panel to move the robot and build the map of the enviroment.  In the terminal press 'u' to disable obstacle avoidance if needed.
+4. Go to terminal and use arrow keys to move the robot OR use the teleop panel to move the robot and build a map of the environment.  In the terminal press 'u' to disable obstacle avoidance if needed.
 
 5. Once complete, run the following commands in a new terminal to save the map. 
  ```bash
@@ -97,25 +96,25 @@ This example shows how to use the ROS navigation stack with the driver node.
  ```bash
  $ MobileSim -m /usr/local/Aria/maps/columbia.map -r p3at -r p3at
  ```
- The port of the robot is specified once the simulator is initiated.
+ The port corresponding to the robot is indicated in the terminal once the simulator is initiated.
 
 
-2. Run servers on each robot using two terminals
+2. Run servers on each robot using two terminals:
  ```bash
  $ /usr/local/Aria/ArNetworking/examples/./serverDemo3 -connectlaser -rh localhost -rrtp 8101 -ris -sp 7272
  $ /usr/local/Aria/ArNetworking/examples/./serverDemo3 -connectlaser -rh localhost -rrtp 8102 -ris -sp 7273
  ```
- The port used to connect to the simulator is specified using the -rrtp option flag, and the port used to initiate the  robot server is specified using the -sp option flag.
+ The port used to connect to the simulated robot is specified using the -rrtp option flag, and the port used to initiate the  robot server is specified using the -sp option flag.
 
 
 3. Run the ROS driver client, gmapping for SLAM, and RVIZ for visualization for both robots using the following launch file: 
  ```bash
  $ roslaunch ariaClientDriver test2_2robotamcl.launch 
  ```
- Key board can be used to move both robots at once OR you can break the launch file to two launch files one for each  robot to realize seperate control. Alternatively you can use the teleop panels to move the robots. The partical distribution should converge to the correct location of the map as the robot collects scans of the enviroment. Also you can uncomment the move base node in the launch file which allows to set waypoints for the robot. The robot should find the optimum path to manuver throught hte enviroment.
+ Both robots can be moved togeher using arrow keys in the terminal window OR you can break the launch file to two launch files one for each robot to realize separate control in seperate terminals. Alternatively, you can use the teleop panels to move the robots. The particle distribution should converge to the correct location of the map as the robots collect scans of the environment. Also you can uncomment the move base node in the launch file which allows to set waypoints for each robot. The move base node allows the robot to find the optimum path to maneuver through the enviroment.
 
 ###C. Running on actual robots
-This example explains the procedure to realize the above functionality using actaal robots.
+This example explains the procedure to realize the above functionality using actual robots.
 
 ![alt text](https://cloud.githubusercontent.com/assets/10774875/9443710/3444cb0a-4a5d-11e5-9cfe-0da3ab03a3a3.png "Example3")
 
@@ -133,4 +132,4 @@ This example explains the procedure to realize the above functionality using act
  $ sudo ./serverDemo3 -connectlaser 
  ```
 
-5. On your local machine you can run  example 1  and example 2 using the same procedure explained above. The only change is that you should use the robots ip address. The following launch files can be used as reference to implement the examples using actual robots.
+5. On your local machine run  example 1  and example 2 using the same procedure explained above. The only change is that you should use the robots ip address. The launch files `test3_1robotslam.launch` and`test3_2robotamcl.launch` can be used as reference to implement the examples using actual robots.
